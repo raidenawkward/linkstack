@@ -25,13 +25,13 @@ struct linkstack_operations {
 	Boolean (*is_full) (struct LinkStack *stack);
 	Int32 (*length) (struct LinkStack *stack);
 	Int32 (*max_length) (struct LinkStack *stack);
-	linkstack_node* (*top) (struct LinkStack *stack);
-	linkstack_node* (*bottom) (struct LinkStack *stack);
+	struct linkstack_node* (*top) (struct LinkStack *stack);
+	struct linkstack_node* (*bottom) (struct LinkStack *stack);
 
 	Boolean (*push) (struct LinkStack *stack, StackElement elem);
 	Boolean (*push_node) (struct LinkStack *stack, struct linkstack_node *node);
 	StackElement (*pop) (struct LinkStack *stack);
-	struct linkstack_node* (*pop) (struct LinkStack *stack);
+	struct linkstack_node* (*pop_node) (struct LinkStack *stack);
 };
 
 #endif // _LINKSTACK_H
