@@ -110,19 +110,58 @@ struct linkstack_node* linkstack_bottom (struct LinkStack *stack) {
 
 
 Boolean linkstack_push (struct LinkStack *stack, StackElement elem) {
+	if (!stack)
+		return false;
+	struct linkstack_node *node = linkstack_create_node();
+	if (!node)
+		return false;
+	node->data = elem;
 
+	Boolean ret = linkstack_push_node(stack,node);
+	if (!ret)
+		free(node);
+
+	return ret;
 }
 
 Boolean linkstack_push_node (struct LinkStack *stack, struct linkstack_node *node) {
+	if (!node || !stack)
+		return false;
+	if (stack->length >= stack->max_length)
+		return false;
 
+	if (!stack->bottom)
+		stack->bottom = node;
+	else
+		node->next = stack->bottom;
+	stack->top = node;
+	++stack->length;
+
+	return true;
 }
 
-StackElement linkstack_pop (struct LinkStack *stack) {
-
+Boolean linkstack_pop (struct LinkStack *stack, StackElement *ret) {
+	if (!stack)
+		return false;
+	struct linkstack_node* top = linkstack_pop_node(stack);
+	if (!top)
+		return false;
+	else {
+		*ret = top->data;
+		free(top);
+	}
+	return true;
 }
 
 struct linkstack_node* linkstack_pop_node (struct LinkStack *stack) {
+	if (!stack)
+		return NULL;
+	if (stack->length <= 0 || stack->top == stack->bottom)
+		return NULL;
 
+	struct linkstack_node* ret = stack->top;
+	stack->top = stack->top->next;
+	--stack->length;
+
+	return ret;
 }
-
-

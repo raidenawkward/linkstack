@@ -31,7 +31,7 @@ Boolean linkstack_push (struct LinkStack *stack, StackElement elem);
 /// push node
 Boolean linkstack_push_node (struct LinkStack *stack, struct linkstack_node *node);
 /// pop elem
-StackElement linkstack_pop (struct LinkStack *stack);
+Boolean linkstack_pop (struct LinkStack *stack, StackElement *ret);
 /// pop node
 struct linkstack_node* linkstack_pop_node (struct LinkStack *stack);
 

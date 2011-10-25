@@ -30,7 +30,7 @@ struct linkstack_operations {
 
 	Boolean (*push) (struct LinkStack *stack, StackElement elem);
 	Boolean (*push_node) (struct LinkStack *stack, struct linkstack_node *node);
-	StackElement (*pop) (struct LinkStack *stack);
+	Boolean (*pop) (struct LinkStack *stack, StackElement *ret);
 	struct linkstack_node* (*pop_node) (struct LinkStack *stack);
 };
 
