@@ -14,11 +14,11 @@ struct LinkStack* linkstack_create () {
 }
 
 void linkstack_destory (struct LinkStack** stack) {
-	if (!stack || !!*stack)
+	if (!stack || !*stack)
 		return;
 
 	if (!(*stack)->top || !(*stack)->bottom)
-		return;
+		goto done;
 
 	struct linkstack_node *p = (*stack)->top;
 	while(p) {
@@ -26,6 +26,7 @@ void linkstack_destory (struct LinkStack** stack) {
 		p = p->next;
 		free(node);
 	}
+done:
 	free(*stack);
 }
 
@@ -67,7 +68,7 @@ Boolean linkstack_is_empty (struct LinkStack *stack) {
 	if (!stack)
 		return ret;
 
-	if (stack->top != stack->bottom || stack->length)
+	if (stack->top != stack->bottom || stack->length > 0)
 		ret = false;
 
 	return ret;
@@ -133,7 +134,7 @@ Boolean linkstack_push_node (struct LinkStack *stack, struct linkstack_node *nod
 	if (!stack->bottom)
 		stack->bottom = node;
 	else
-		node->next = stack->bottom;
+		node->next = stack->top;
 	stack->top = node;
 	++stack->length;
 
@@ -156,12 +157,17 @@ Boolean linkstack_pop (struct LinkStack *stack, StackElement *ret) {
 struct linkstack_node* linkstack_pop_node (struct LinkStack *stack) {
 	if (!stack)
 		return NULL;
-	if (stack->length <= 0 || stack->top == stack->bottom)
+	if (stack->length <= 0 || !stack->top || !stack->bottom)
 		return NULL;
 
 	struct linkstack_node* ret = stack->top;
 	stack->top = stack->top->next;
 	--stack->length;
+	if (stack->length <= 0) {
+		stack->length = 0;
+		stack->top = NULL;
+		stack->bottom = NULL;
+	}
 
 	return ret;
 }
