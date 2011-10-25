@@ -63,27 +63,49 @@ struct linkstack_node* linkstack_create_node () {
 
 
 Boolean linkstack_is_empty (struct LinkStack *stack) {
+	Boolean ret = true;
+	if (!stack)
+		return ret;
 
+	if (stack->top != stack->bottom || stack->length)
+		ret = false;
+
+	return ret;
 }
 
 Boolean linkstack_is_full (struct LinkStack *stack) {
+	Boolean ret = false;
+	if (!stack)
+		return ret;
 
+	if (stack->length >= stack->max_length)
+		ret = true;
+
+	return ret;
 }
 
 Int32 linkstack_length (struct LinkStack *stack) {
-
+	if (!stack)
+		return 0;
+	return stack->length;
 }
 
 Int32 linkstack_max_length (struct LinkStack *stack) {
-
+	if (!stack)
+		return 0;
+	return stack->max_length;
 }
 
 struct linkstack_node* linkstack_top (struct LinkStack *stack) {
-
+	if (!stack)
+		return NULL;
+	return stack->top;
 }
 
 struct linkstack_node* linkstack_bottom (struct LinkStack *stack) {
-
+	if (!stack)
+		return NULL;
+	return stack->bottom;
 }
 
 
