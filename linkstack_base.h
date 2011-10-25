@@ -1,0 +1,4 @@
+#ifndef _LINKSTACK_BASE_H
+#define _LINKSTACK_BASE_H
+
+#endif // _LINKSTACK_BASE_H
